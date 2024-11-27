@@ -22,11 +22,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val onThisDayViewModel : OnThisDayViewModel by viewModels()
+
+        if (onThisDayViewModel != null)
         setContent {
             OnThisDayTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = onThisDayViewModel.dummyData,
+                        name = "",
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
