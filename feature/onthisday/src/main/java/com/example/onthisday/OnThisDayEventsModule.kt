@@ -1,6 +1,9 @@
 package com.example.onthisday
 
 import com.example.onthisday.data.OnThisDayEventService
+import com.example.onthisday.domain.EventsRepository
+import com.example.onthisday.domain.HistoricEventsRepository
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,27 +15,34 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
-object OnThisDayEventsModule {
+abstract class OnThisDayEventsModule {
 
-    @Provides
-    fun provideJson(): Json {
-        return Json { ignoreUnknownKeys = true }
-    }
+    @Binds
+    abstract fun bindEventsRepository(
+        historicEventsRepository: HistoricEventsRepository
+    ): EventsRepository
 
-    @Provides
-    fun provideRetrofit(
-        json: Json
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl("https://byabbe.se/")
-            .addConverterFactory(json.asConverterFactory(MediaType.get("application/json; charset=UTF8")))
-            .build()
-    }
+    companion object {
+        @Provides
+        fun provideJson(): Json {
+            return Json { ignoreUnknownKeys = true }
+        }
 
-    @Provides
-    fun provideOnThisDayService(
-        retrofit: Retrofit,
-    ): OnThisDayEventService {
-        return retrofit.create(OnThisDayEventService::class.java)
+        @Provides
+        fun provideRetrofit(
+            json: Json,
+        ): Retrofit {
+            return Retrofit.Builder()
+                .baseUrl("https://byabbe.se/")
+                .addConverterFactory(json.asConverterFactory(MediaType.get("application/json; charset=UTF8")))
+                .build()
+        }
+
+        @Provides
+        fun provideOnThisDayService(
+            retrofit: Retrofit,
+        ): OnThisDayEventService {
+            return retrofit.create(OnThisDayEventService::class.java)
+        }
     }
 }

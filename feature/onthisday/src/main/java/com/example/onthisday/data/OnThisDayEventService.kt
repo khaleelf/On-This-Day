@@ -1,7 +1,6 @@
 package com.example.onthisday.data
 
 import com.example.onthisday.domain.Date
-import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -11,9 +10,9 @@ interface OnThisDayEventService {
     suspend fun getEvents(
         @Path("day") day: String,
         @Path("month") month: String,
-    ): Response<EventList>
+    ): Events
 }
 
-suspend fun OnThisDayEventService.getEvents(date: Date): Response<EventList> {
-   return getEvents(date.day.toString(), date.month.toString())
+suspend fun OnThisDayEventService.getEvents(date: Date): Events {
+    return getEvents(date.day.toString(), date.month.toString())
 }
