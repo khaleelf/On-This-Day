@@ -1,5 +1,7 @@
 package com.example.onthisday.domain
 
+import kotlinx.coroutines.flow.Flow
+
 interface EventsRepository {
-    suspend fun getEventsResult(date: Date): EventsResult
+    fun getEvents(date: Date): Flow<EventsResult>
 }

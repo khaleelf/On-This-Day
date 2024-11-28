@@ -3,6 +3,8 @@ package com.example.onthisday.domain
 import android.util.Log
 import com.example.onthisday.data.OnThisDayEventService
 import com.example.onthisday.data.getEvents
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 import java.net.UnknownHostException
 import javax.inject.Inject
@@ -11,8 +13,9 @@ class HistoricEventsRepository @Inject constructor(
     private val onThisDayEventService: OnThisDayEventService,
 ) : EventsRepository {
 
-    override suspend fun getEventsResult(date: Date): EventsResult {
-        return fromNetwork(date)
+    override fun getEvents(date: Date): Flow<EventsResult> = flow {
+        val eventsFromNetwork = fromNetwork(date)
+        emit(eventsFromNetwork)
     }
 
     private suspend fun fromNetwork(date: Date): EventsResult {

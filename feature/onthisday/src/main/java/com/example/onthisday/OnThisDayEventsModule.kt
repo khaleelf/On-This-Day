@@ -15,6 +15,7 @@ import retrofit2.converter.kotlinx.serialization.asConverterFactory
 
 @Module
 @InstallIn(SingletonComponent::class)
+@Suppress("unused")
 abstract class OnThisDayEventsModule {
 
     @Binds

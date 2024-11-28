@@ -5,13 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.onthisday.presentation.EventsScreen
 import com.example.onthisday.presentation.OnThisDayViewModel
 import com.example.onthisday.presentation.theme.OnThisDayTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,32 +19,11 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         val onThisDayViewModel: OnThisDayViewModel by viewModels()
 
-        if (onThisDayViewModel != null)
-            setContent {
-                OnThisDayTheme {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        Greeting(
-                            name = "",
-                            modifier = Modifier.padding(innerPadding)
-                        )
-                    }
-                }
+        setContent {
+            OnThisDayTheme {
+                val uiState by onThisDayViewModel.uiState.collectAsState()
+                EventsScreen(uiState = uiState)
             }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    OnThisDayTheme {
-        Greeting("Android")
+        }
     }
 }
