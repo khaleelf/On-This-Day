@@ -6,7 +6,7 @@ import kotlinx.serialization.Serializable
 data class Events(
     val wikipedia: String,
     val date: String,
-    val pastEvents: List<PastEvent>,
+    val events: List<PastEvent>,
 )
 
 fun <T> Events.map(f: (Events) -> T): T = f(this)

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.onthisday.domain.Date
 import com.example.onthisday.domain.EventsRepository
 import com.example.onthisday.domain.EventsResult
+import com.example.onthisday.domain.HistoricEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.map
@@ -32,8 +33,17 @@ class OnThisDayViewModel @Inject constructor(
             initialValue = EventsUiState.Loading
         )
 
-    private fun toUiState(eventsResult: EventsResult) : EventsUiState = when(eventsResult) {
+    private fun toUiState(eventsResult: EventsResult): EventsUiState = when (eventsResult) {
         is EventsResult.Error -> EventsUiState.Error(eventsResult.reason)
-        is EventsResult.Success -> EventsUiState.Display(eventsResult.historicEvents)
+        is EventsResult.Success -> EventsUiState.Display(
+            eventsResult.historicEvents.sortByYear().toEventGrouping()
+        )
     }
+
+    private fun List<HistoricEvent>.sortByYear() = sortedByDescending(HistoricEvent::year)
+
+    private fun List<HistoricEvent>.toEventGrouping(): List<HistoricEventGroup> =
+        groupBy(HistoricEvent::year).map { entry ->
+            HistoricEventGroup(entry.key.toString(), entry.value)
+        }
 }
