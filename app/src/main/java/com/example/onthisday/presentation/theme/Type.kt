@@ -1,4 +1,4 @@
-package com.example.onthisday.ui.theme
+package com.example.onthisday.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
