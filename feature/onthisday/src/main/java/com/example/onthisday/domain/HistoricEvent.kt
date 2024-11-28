@@ -10,4 +10,4 @@ data class HistoricEvent(
 data class Link(val title: String, val url: Url)
 
 @JvmInline
-value class Url(val string: String)
+value class Url(val value: String)

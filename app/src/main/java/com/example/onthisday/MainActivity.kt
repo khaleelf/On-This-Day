@@ -1,5 +1,8 @@
 package com.example.onthisday
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,8 +25,15 @@ class MainActivity : ComponentActivity() {
         setContent {
             OnThisDayTheme {
                 val uiState by onThisDayViewModel.uiState.collectAsState()
-                EventsScreen(uiState = uiState)
+                EventsScreen(
+                    uiState = uiState,
+                    onClick = { url -> openBrowser(context = this, url) })
             }
         }
+    }
+
+    private fun openBrowser(context: Context, url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        context.startActivity(intent)
     }
 }
