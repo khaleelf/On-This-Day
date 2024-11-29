@@ -8,6 +8,7 @@ import com.example.onthisday.domain.EventsResult
 import com.example.onthisday.domain.HistoricEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import java.time.LocalDate
@@ -24,7 +25,7 @@ class OnThisDayViewModel @Inject constructor(
         Date(day = localDate.dayOfMonth, month = localDate.monthValue)
     }
 
-    val uiState = eventsRepository
+    val uiState: StateFlow<EventsUiState> = eventsRepository
         .getEvents(date)
         .map(::toUiState)
         .stateIn(
