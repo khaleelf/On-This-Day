@@ -25,18 +25,18 @@ class OnThisDayViewModel @Inject constructor(
         Date(day = localDate.dayOfMonth, month = localDate.monthValue)
     }
 
-    val uiState: StateFlow<EventsUiState> = eventsRepository
+    val uiState: StateFlow<OnThisDayUiState> = eventsRepository
         .getEvents(date)
         .map(::toUiState)
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5.seconds.inWholeMilliseconds),
-            initialValue = EventsUiState.Loading
+            initialValue = OnThisDayUiState.Loading
         )
 
-    private fun toUiState(eventsResult: EventsResult): EventsUiState = when (eventsResult) {
-        is EventsResult.Error -> EventsUiState.Error(eventsResult.reason)
-        is EventsResult.Success -> EventsUiState.Display(
+    private fun toUiState(eventsResult: EventsResult): OnThisDayUiState = when (eventsResult) {
+        is EventsResult.Error -> OnThisDayUiState.Error(eventsResult.reason)
+        is EventsResult.Success -> OnThisDayUiState.Display(
             eventsResult.historicEvents.sortByYear().toEventGrouping()
         )
     }

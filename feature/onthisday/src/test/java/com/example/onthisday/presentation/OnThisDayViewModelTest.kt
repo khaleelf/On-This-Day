@@ -50,7 +50,7 @@ class OnThisDayViewModelTest {
     fun `Initial value is loading`(): Unit = runTest {
         val viewModel = OnThisDayViewModel(hotRepository)
         val uiState = viewModel.uiState.first()
-        assertEquals(EventsUiState.Loading, uiState)
+        assertEquals(OnThisDayUiState.Loading, uiState)
     }
 
     @Test
@@ -60,7 +60,7 @@ class OnThisDayViewModelTest {
             viewModel.uiState.collect {}
         }
         hotRepository.emit(EventsResult.Success(events))
-        val expected = EventsUiState.Display(
+        val expected = OnThisDayUiState.Display(
             listOf(
                 HistoricEventGroup("3", listOf(events[2])),
                 HistoricEventGroup("2", listOf(events[1])),
@@ -82,7 +82,7 @@ class OnThisDayViewModelTest {
             viewModel.uiState.collect {}
         }
         hotRepository.emit(EventsResult.Success(groupedEvents))
-        val expected = EventsUiState.Display(
+        val expected = OnThisDayUiState.Display(
             listOf(
                 HistoricEventGroup("3", listOf(groupedEvents[2])),
                 HistoricEventGroup("1", listOf(groupedEvents[0], groupedEvents[1]))
@@ -99,7 +99,7 @@ class OnThisDayViewModelTest {
             viewModel.uiState.collect {}
         }
         hotRepository.emit(EventsResult.Error("fake test error"))
-        val expected = EventsUiState.Error("fake test error")
+        val expected = OnThisDayUiState.Error("fake test error")
         assertEquals(expected, viewModel.uiState.value)
     }
 }

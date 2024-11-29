@@ -27,24 +27,24 @@ import com.example.onthisday.R
 import com.example.onthisday.domain.HistoricEvent
 
 @Composable
-fun EventsScreen(
+fun OnThisDayScreen(
     modifier: Modifier = Modifier,
-    uiState: EventsUiState,
+    uiState: OnThisDayUiState,
     onClick: (String) -> Unit,
 ) = Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
     when (uiState) {
-        is EventsUiState.Error -> ErrorScreen(
+        is OnThisDayUiState.Error -> ErrorScreen(
             modifier = modifier.padding(innerPadding),
             info = uiState.reason
         )
 
-        is EventsUiState.Display -> DisplayScreen(
+        is OnThisDayUiState.Display -> DisplayScreen(
             modifier = modifier.padding(innerPadding),
             events = uiState.historicEvents,
             onClick = onClick,
         )
 
-        EventsUiState.Loading -> LoadingScreen(modifier = modifier.padding(innerPadding))
+        OnThisDayUiState.Loading -> LoadingScreen(modifier = modifier.padding(innerPadding))
     }
 }
 
