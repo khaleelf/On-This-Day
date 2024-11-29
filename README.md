@@ -33,3 +33,8 @@ Interfaces are concise to prevent bloat. And interfaces are used when injecting 
 - Unit tests for ViewModel and data mapping
 - Flow testing demonstrating proper handling of asynchronous operations
 - Test coverage for core business logic
+
+### App Screen Shot
+![Screenshot_20241129_101530](https://github.com/user-attachments/assets/08e160e2-948b-4b31-af9a-09f4d96ff34d)
+
+
