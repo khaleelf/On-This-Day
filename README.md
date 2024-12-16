@@ -1,7 +1,6 @@
 # On This Day - Historical Events
 
 A demo application that showcases historical events that occurred on the current date throughout history.
-Built for Lloyds Banking Group as a technical challenge.
 
 ## Features
 - Displays historical events that occurred on the current date
